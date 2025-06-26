@@ -1,13 +1,18 @@
-/.venv
+.venv/
 **/.DS_Store
-/.vscode
+.vscode/
 
-/data/*
-/logs/*
-/models/*
+# Project directories
+data/
+logs/
+models/
+
+# Document files
 *.pdf
+
+# Python
 __pycache__/
 *.py[cod]
 
-
-README.md
+# For now
+README.md 
