@@ -74,10 +74,10 @@ def get_all_labels(dataset: NpzFile) -> np.ndarray:
 
 
 
-def get_percentage():
-    """
-    Returns a dataframe with the percentage
-    """
+# def get_percentage():
+#     """
+#     Returns a dataframe with the percentage
+#     """
 
 
 

@@ -19,8 +19,12 @@ dependencies = [
 ]
 
 [tool.poetry]
-packages = [{include = "project_c", from = "src"}]
+packages = [{include = "project_c3", from = "src"}]
 
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.4.1"
+rich = "^14.0.0"
 
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]
