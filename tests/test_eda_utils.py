@@ -7,7 +7,7 @@ from unittest.mock import Mock, patch, mock_open, MagicMock
 import matplotlib.pyplot as plt
 from numpy.lib.npyio import NpzFile
 
-from src.project_c3.utils.eda_utils import (
+from project_c3.utils.eda_utils import (
     download_MNIST_dataset,
     get_label_names,
     get_all_labels,

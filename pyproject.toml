@@ -19,7 +19,7 @@ dependencies = [
 ]
 
 [tool.poetry]
-packages = [{include = "project_c3", from = "src"}]
+packages = [{include = "project_c3"}]
 
 
 [tool.poetry.group.dev.dependencies]
