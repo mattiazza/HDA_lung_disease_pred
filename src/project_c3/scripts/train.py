@@ -315,7 +315,7 @@ def train_model(
         print(f"\nUsing class weights")
     
     # Create callbacks
-    callbacks = create_callbacks(f"{model.name}_{dataset_size}", patience)
+    callbacks = create_callbacks(f"{model.name}", patience)
     
 
     

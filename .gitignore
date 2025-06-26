@@ -1,6 +1,8 @@
 /.venv
 /.DS_Store
+
 /data/*
+/logs/*
 *.pdf
 __pycache__/
 *.py[cod]
