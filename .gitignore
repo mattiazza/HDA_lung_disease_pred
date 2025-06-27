@@ -1,15 +1,28 @@
+# Virtual environments
 .venv/
+
+# Operating system files
 **/.DS_Store
+
+# IDE and editor files
 .vscode/
 
 # Project directories
-data/
-logs/
-models/
+data/                         
+logs/                         
+/models/                      
 
 # Document files
 *.pdf
 
-# Python
-__pycache__/
+# Python cache and compiled files
+**/__pycache__/
 *.py[cod]
+
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+**/.ipynb_checkpoints/
+
+# Poetry
+poetry.lock                   
