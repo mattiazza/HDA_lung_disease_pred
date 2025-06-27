@@ -13,6 +13,3 @@ models/
 # Python
 __pycache__/
 *.py[cod]
-
-# For now
-README.md 
