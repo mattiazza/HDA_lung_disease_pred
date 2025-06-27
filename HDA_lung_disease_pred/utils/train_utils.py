@@ -2,7 +2,7 @@
 Training utilities for easy model training from notebooks.
 """
 
-from project_c3.scripts.train import train_model
+from HDA_lung_disease_pred.scripts.train import train_model
 
 
 def quick_train(dataset_size=64, epochs=20, batch_size=32):

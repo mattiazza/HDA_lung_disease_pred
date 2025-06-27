@@ -1,25 +1,25 @@
 [project]
-name = "project-c"
+name = "HDA_lung_disease_pred"
 version = "0.1.0"
 description = ""
 authors = [
-    {name = "mattiazza",email = "mattiapiazza@gmail.com"}
+    {name = "mattiazza", email = "mattiapiazza@gmail.com"}
 ]
 readme = "README.md"
 requires-python = ">=3.10,<3.12"
 dependencies = [
-    "ipykernel (>=6.29.5,<7.0.0)",
-    "numpy (>=1.26.0,<2.2.0)",
-    "tensorflow (>=2.19.0,<3.0.0)",
-    "medmnist (>=3.0.2,<4.0.0)",
-    "requests (>=2.32.4,<3.0.0)",
-    "matplotlib (>=3.10.3,<4.0.0)",
-    "scikit-learn (>=1.7.0,<2.0.0)",
-    "seaborn (>=0.13.2,<0.14.0)",
+    "ipykernel>=6.29.5,<7.0.0",
+    "numpy>=1.26.0,<2.2.0",
+    "tensorflow>=2.19.0,<3.0.0",
+    "medmnist>=3.0.2,<4.0.0",
+    "requests>=2.32.4,<3.0.0",
+    "matplotlib>=3.10.3,<4.0.0",
+    "scikit-learn>=1.7.0,<2.0.0",
+    "seaborn>=0.13.2,<0.14.0",
 ]
 
 [tool.poetry]
-packages = [{include = "project_c3"}]
+packages = [{include = "HDA_lung_disease_pred"}]
 
 
 [tool.poetry.group.dev.dependencies]

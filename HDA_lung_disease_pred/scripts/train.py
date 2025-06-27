@@ -18,9 +18,9 @@ from tensorflow.keras.optimizers import Adam
 from tensorflow.keras.callbacks import EarlyStopping, ModelCheckpoint, ReduceLROnPlateau
 from sklearn.utils.class_weight import compute_class_weight
 
-from project_c3.utils.eda_utils import download_MNIST_dataset, get_label_names
-from project_c3.utils.data_preparation import load_set
-from project_c3.models.cnn_baseline import cnn_baseline_model
+from HDA_lung_disease_pred.utils.eda_utils import download_MNIST_dataset, get_label_names
+from HDA_lung_disease_pred.utils.data_preparation import load_set
+from HDA_lung_disease_pred.models.cnn_baseline import cnn_baseline_model
 
 
 def calculate_class_weights(y_train: np.ndarray) -> Dict[int, float]:
