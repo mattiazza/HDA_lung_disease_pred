@@ -6,7 +6,7 @@ authors = [
     {name = "mattiazza",email = "mattiapiazza@gmail.com"}
 ]
 readme = "README.md"
-requires-python = ">=3.12"
+requires-python = ">=3.10,<3.12"
 dependencies = [
     "ipykernel (>=6.29.5,<7.0.0)",
     "numpy (>=1.26.0,<2.2.0)",
