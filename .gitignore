@@ -14,6 +14,8 @@ logs/
 
 # Document files
 *.pdf
+*.md
+!README.md
 
 # Python cache and compiled files
 **/__pycache__/
@@ -23,6 +25,9 @@ logs/
 # Jupyter Notebook checkpoints
 .ipynb_checkpoints/
 **/.ipynb_checkpoints/
+
+# Log files
+*.log
 
 # Poetry
 poetry.lock                   

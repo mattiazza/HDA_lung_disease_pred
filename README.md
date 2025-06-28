@@ -10,10 +10,9 @@ The goal is to develop, train, and evaluate deep learning models for lung diseas
 ```
 HDA_lung_disease_pred/
 ├── HDA_project_C3.ipynb          # Main notebook for exploration and development
+├── .gitignore                   # Git ignore rules
 ├── data/                          # Data directory (datasets stored locally)
-│   ├── chestmnist_64.npz         # ChestMNIST 64x64 resolution dataset
-│   ├── chestmnist_128.npz        # ChestMNIST 128x128 resolution dataset
-│   └── chestmnist_224.npz        # ChestMNIST 224x224 resolution dataset
+│   └── chestmnist_64.npz         # ChestMNIST 64x64 resolution dataset
 ├── HDA_lung_disease_pred/        # Main package directory
 │   ├── __init__.py
 │   ├── models/                   # Custom model architectures
@@ -26,20 +25,18 @@ HDA_lung_disease_pred/
 │   └── utils/                    # Utility functions and preprocessing
 │       ├── __init__.py
 │       ├── data_preparation.py   # Dataset loading and preprocessing
-│       ├── eda_utils.py         # Exploratory data analysis utilities
-│       ├── plot_results.py     # Visualization and plotting functions
-│       └── train_utils.py       # Training utilities and helpers
-├── tests/                        # Unit tests
+│       └── plot_results.py     # Visualization and plotting functions
+├── tests/                        # Unit tests directory (cleaned up)
 │   ├── __init__.py
-│   └── test_eda_utils.py        # Tests for EDA functions
+│   └── conftest.py              # Test fixtures and configuration
 ├── models/                       # Saved trained models
 │   ├── cnn_baseline_64_best.keras    # Best model checkpoint
 │   └── cnn_baseline_64_final.keras   # Final trained model
 ├── logs/                         # Training logs and history
 │   └── cnn_baseline_64_history.json  # Training history
-├── pyproject.toml               # Project configuration (Poetry)
+├── plots/                        # Saved plots and visualizations
+├── pyproject.toml               # Project configuration (PEP 621)
 ├── poetry.lock                  # Dependency lock file
-├── .gitignore                   # Git ignore rules
 └── README.md                    # Project documentation
 ```
 
@@ -58,11 +55,13 @@ Multi-label classification of **14 lung diseases** from **frontal chest X-ray im
 - Source: [MedMNIST v2 - ChestMNIST](https://zenodo.org/records/10519652)
 
 ### Current Implementation Status ✅
-- **Data Pipeline**: Complete dataset download and loading functionality
+- **Data Pipeline**: Complete dataset download and loading functionality with configurable paths
 - **Exploratory Data Analysis**: Label distribution analysis, image visualization, multi-label statistics
-- **Baseline Model**: CNN architecture with 684K parameters trained on 64×64 images
-- **Training Framework**: Complete training pipeline with early stopping, class weights, and validation
+- **Baseline Model**: CNN architecture with configurable parameters trained on 64×64 images
+- **Training Framework**: Complete training pipeline with early stopping, callbacks, and live plotting
 - **Environment**: Poetry-based dependency management with PEP 621 configuration
+- **Testing Suite**: Clean test infrastructure with configurable paths
+- **Visualization**: Comprehensive plotting functions with save capabilities for reports
 
 ### Objectives
 - Design original deep learning architectures in **TensorFlow**
@@ -70,6 +69,61 @@ Multi-label classification of **14 lung diseases** from **frontal chest X-ray im
 - Evaluate classification performance using proper metrics (AUC, F1-score, etc.)
 - Analyze computational complexity and training time
 - Write a clear and structured scientific report using LaTeX
+
+---
+
+## ⚙️ Quick Setup
+
+### Environment Setup
+```bash
+# Clone the repository
+git clone <repository-url>
+cd HDA_lung_disease_pred
+
+# Install dependencies
+poetry install
+
+# Activate the environment
+poetry shell
+```
+
+### Configuration Options
+The project uses environment variables with sensible defaults:
+```python
+# Data directories
+DATA_DIR = os.getenv("DATA_DIR", "./data")
+BASE_URL = os.getenv("BASE_URL", "https://zenodo.org/records/10519652/files")
+
+# Figure settings
+FIGURE_WIDTH = int(os.getenv("FIGURE_WIDTH", "10"))
+FIGURE_HEIGHT = int(os.getenv("FIGURE_HEIGHT", "6"))
+```
+
+---
+
+## 🧪 Testing
+
+### Test Infrastructure
+- **Clean test environment** with configurable paths
+- **Isolated directories** using temporary files  
+- **CI/CD ready** with proper mocking
+- **Environment-based configuration**
+
+### Running Tests
+```bash
+# Run all tests
+poetry run pytest tests/ -v
+
+# Run with custom configuration
+TEST_RANDOM_SEED=123 poetry run pytest tests/ -v
+```
+
+### Test Configuration
+Tests use environment variables with defaults:
+```python
+TEST_DATA_DIR = os.getenv('TEST_DATA_DIR', 'test_data')
+TEST_RANDOM_SEED = int(os.getenv('TEST_RANDOM_SEED', '42'))
+```
 
 ---
 
@@ -82,36 +136,64 @@ Multi-label classification of **14 lung diseases** from **frontal chest X-ray im
 - **Matplotlib, Seaborn** (visualization)
 - **scikit-learn** (evaluation metrics)
 - **Jupyter** (interactive development)
+- **pytest** (testing framework)
 
 ---
 
 ## 🧪 Evaluation Metrics
 
-- **Accuracy** (overall classification performance)
-- **F1-score** (macro & per-class, handling class imbalance)  
-- **AUC** (area under ROC curve, macro & per-class)
-- **Precision & Recall** (per-class performance)
-- **Confusion Matrix** (detailed classification results)
+For multi-label classification, the following metrics are implemented:
+
+- **Precision & Recall** (per-class and macro-averaged)
+- **F1-Score** (macro and micro, handling class imbalance)  
+- **AUC** (area under ROC curve, appropriate for binary relevance)
+- **Subset Accuracy** (exact match for complete label sets)
+- **Hamming Score** (label-wise accuracy)
 - **Training Efficiency** (time, memory usage, convergence)
+
+### Important Note on Metrics
+❌ **Binary Accuracy** is NOT appropriate for multi-label classification  
+✅ **Use Precision, Recall, F1, AUC** for meaningful evaluation
 
 ---
 
-## � Quick Start
+## 🚀 Quick Start
 
-To run the complete pipeline:
-
+### Data Loading and EDA
 ```python
-# In the Jupyter notebook or Python script
-from HDA_lung_disease_pred.utils.eda_utils import download_MNIST_dataset
+from HDA_lung_disease_pred.utils.data_preparation import download_MNIST_dataset, create_tf_dataset
+from HDA_lung_disease_pred.utils.plot_results import plot_label_distribution
+
+# Load dataset
+dataset = download_MNIST_dataset("chestmnist_64")
+train_data, val_data, test_data = create_tf_dataset(dataset, batch_size=32)
+
+# EDA and visualization
+plot_label_distribution(dataset, label_names, save=True)
+```
+
+### Model Training
+```python
 from HDA_lung_disease_pred.models.cnn_baseline import cnn_baseline_model
 from HDA_lung_disease_pred.scripts.train import train_model
 
-# Download and load data
-dataset = download_MNIST_dataset("chestmnist_64")
-
 # Create and train model
-model = cnn_baseline_model(input_shape=(64, 64, 1), num_classes=14)
-trained_model, history = train_model(model, train_data, val_data, test_data)
+model = cnn_baseline_model(
+    input_shape=(64, 64, 1), 
+    num_classes=14,
+    metrics=['precision', 'recall']  # Multi-label appropriate metrics
+)
+
+# Train with live plotting
+trained_model, history = train_model(
+    model=model,
+    train_data=train_data,
+    val_data=val_data,
+    test_data=test_data,
+    epochs=10,
+    patience=5,
+    save_history=True
+)
 ```
 
 ---
@@ -119,11 +201,17 @@ trained_model, history = train_model(model, train_data, val_data, test_data)
 ## 📊 Results Summary
 
 ### Baseline CNN (64×64 images)
-- **Architecture**: 3 Conv2D layers + 2 Dense layers
-- **Parameters**: 684,430 (2.61 MB)
-- **Training**: 10 epochs with early stopping
-- **Dataset**: 1,000 training / 200 validation / 200 test samples
-- **Status**: ✅ Successfully trained and evaluated
+- **Architecture**: 3 Conv2D layers + 2 Dense layers, configurable parameters
+- **Multi-label Classification**: Sigmoid activation, binary crossentropy loss
+- **Training Features**: Early stopping, learning rate scheduling, live plotting
+- **Metrics**: Precision, Recall, F1-Score, AUC (appropriate for multi-label tasks)
+- **Status**: ✅ Successfully implemented with comprehensive training pipeline
+
+### Key Features
+- **Live Training Plots**: Real-time loss and metrics visualization
+- **Plot Saving**: Automatic plot saving for reports in `plots/` directory
+- **Flexible Architecture**: Configurable filters, dropout, learning rate
+- **Multi-label Ready**: Proper metrics and loss functions for medical diagnosis
 
 ---
 
@@ -131,16 +219,21 @@ trained_model, history = train_model(model, train_data, val_data, test_data)
 
 ### Key Files
 - **`HDA_project_C3.ipynb`**: Complete workflow from data exploration to model training
-- **`HDA_lung_disease_pred/models/cnn_baseline.py`**: Baseline CNN architecture implementation  
-- **`HDA_lung_disease_pred/utils/eda_utils.py`**: Data analysis and visualization functions
-- **`HDA_lung_disease_pred/scripts/train.py`**: Training pipeline with validation and callbacks
+- **`HDA_lung_disease_pred/models/cnn_baseline.py`**: Configurable CNN architecture implementation  
+- **`HDA_lung_disease_pred/utils/data_preparation.py`**: Data loading with tf.data.Dataset support
+- **`HDA_lung_disease_pred/utils/plot_results.py`**: Visualization functions with save capabilities
+- **`HDA_lung_disease_pred/scripts/train.py`**: Complete training pipeline with live plotting
 
 ### Project Features
 - 🔍 **Comprehensive EDA**: Label distribution, multi-label analysis, sample visualization
 - 🏗️ **Modular Architecture**: Clean separation of models, utilities, and training scripts
 - 📦 **Modern Python Setup**: Poetry dependency management, PEP 621 configuration
-- 🧪 **Robust Testing**: Unit tests for core functionality
-- 📊 **Complete Pipeline**: From raw data to trained model evaluation
+- 🧪 **Clean Testing**: Test infrastructure with configurable paths and isolated environments
+- ⚙️ **Environment Configuration**: Flexible configuration via environment variables
+- 🔒 **CI/CD Ready**: Tests work in clean environments without side effects
+- 📊 **Complete Pipeline**: From raw data to trained model with live monitoring
+- 💾 **Report Ready**: Automatic plot saving for academic reports
+- 🎯 **Multi-label Focus**: Proper metrics and evaluation for medical diagnosis
 
 ---
 
